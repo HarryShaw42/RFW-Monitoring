@@ -3,9 +3,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <body style="background: #eeee">
-<div class="container" style="    background: white;height: 500px;border-radius: 20px;border: 2px solid;margin-top: 50px;" onload="CheckPages()">
+<script src="site.js"></script>
+<div class="container" style=" background: white;height: 500px;border-radius: 20px;border: 2px solid;margin-top: 50px;" onload="CheckPages()">
   <h2 style="padding-top: 20px; margin-top: 20px; margin-bottom: 20px">RFW - Current Status:</h2>
-  <div><img style="height: 80px;position: absolute;right: 83px;top: 72px;" src="https://www.royalfarwest.org.au/wp-content/uploads/2018/04/RFW-Master-Logo-Stacked-RGB-2017-insta.jpg"></div>
+  <!--div><img style="height: 80px;position: absolute;right: 83px;top: 72px;" src="https://www.royalfarwest.org.au/wp-content/uploads/2018/04/RFW-Master-Logo-Stacked-RGB-2017-insta.jpg"></div-->
 <table class="table table-gray">
   <thead>
     <tr>
@@ -33,66 +34,4 @@
   </tbody>
 </table>
 </div>
-
-<script>
-
-
-window.onload = function() {
-  CheckConnectIntergration()
-}
-
-function CheckConnectIntergration() {
-$.ajax({
-//curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
-
-       'url' : 'https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=20',
-       'type' : 'GET',
-       'Content-Type' : 'application/json',
-        headers: {
-        'X-Auth-Token' : '791a0df3-0526-463c-8217-f9702430215a',
-       },
-       'success' : function(data) {
-           var failed = false
-           for (let i = 0; i < data.content.length; i++) {
-             console.log(data.content[i].successful)
-             if(data.content[i].successful == false){
-               $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
-               $('#ConnectIntergrationStatus')[0].style.color = 'red';
-               $('#ConnectIntergrationTitle')[0].style.color = 'red';
-               $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
-               $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
-               failed = true
-               break
-             }
-           }
-           if(failed == false){
-             $('#ConnectIntergrationStatus')[0].innerHTML = 'PASSING';
-             $('#ConnectIntergrationStatus')[0].style.color = 'Green';
-             $('#ConnectIntergrationTitle')[0].style.color = 'Green';
-           }
-       },
-       'error' : function(request,error)
-       {
-           $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
-           $('#ConnectIntergrationStatus')[0].style.color = 'red';
-           $('#ConnectIntergrationTitle')[0].style.color = 'red';
-           $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
-           $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
-       }
-   });
- }
-
-
-/* ###### */
-for (let i = 0; i < 1000; i++) {
-
-  setTimeout(function(){
-    $(".FAILED").fadeIn();
-  }, 800);
-  setTimeout(function(){
-    $(".FAILED").fadeOut();
-  }, 800);
-}
-
-</script>
 </body>
