@@ -10,7 +10,7 @@ $.ajax({
        'type' : 'GET',
        'Content-Type' : 'application/json',
         headers: {
-        'X-Auth-Token' : 'f823268e-7422-49cc-86b1-2f34e6086139',
+        'X-Auth-Token' : '53fd31e9-5d5b-4f03-8e49-00f9025893e8',
        },
        'success' : function(data) {
            var failed = false
