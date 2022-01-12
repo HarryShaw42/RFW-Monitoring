@@ -1,8 +1,49 @@
 window.onload = function() {
-  CheckConnectIntergration()
+  GetConnectToken()
+  //CheckConnectIntergration()
+  refreshPageTimer()
+  setpagetime()
 }
 
-function CheckConnectIntergration() {
+function refreshPageTimer() {
+  setTimeout(function(){
+    location.reload();
+  }, 60000);
+}
+
+
+
+function setpagetime() {
+  var today = new Date();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  $('#time')[0].innerHTML = time;
+}
+
+
+
+function GetConnectToken() {
+  $.ajax({
+//curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
+
+       'url' : 'https://online.royalfarwest.org.au/app/api/login',
+       'type' : 'POST',
+       'Content-Type' : 'application/json',
+       'data' : 'username=emr.scan&password=4RZv2b5YT',
+       'success' : function(data) {
+         //console.log(data.split('"')[3])
+         CheckConnectIntergration(data.split('"')[3]);
+       },
+       'error' : function(request,error){
+         $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
+         $('#ConnectIntergrationStatus')[0].style.color = 'red';
+         $('#ConnectIntergrationTitle')[0].style.color = 'red';
+         $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
+         $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
+       }
+       });
+}
+
+function CheckConnectIntergration(token) {
 $.ajax({
 //curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
 
@@ -10,7 +51,7 @@ $.ajax({
        'type' : 'GET',
        'Content-Type' : 'application/json',
         headers: {
-        'X-Auth-Token' : '53fd31e9-5d5b-4f03-8e49-00f9025893e8',
+        'X-Auth-Token' : token,
        },
        'success' : function(data) {
            var failed = false
