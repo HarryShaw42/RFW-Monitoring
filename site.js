@@ -10,20 +10,24 @@ $.ajax({
        'type' : 'GET',
        'Content-Type' : 'application/json',
         headers: {
-        'X-Auth-Token' : '1df4a574-fb96-4862-b9ff-a5f2fdb3f336',
+        'X-Auth-Token' : 'f823268e-7422-49cc-86b1-2f34e6086139',
        },
        'success' : function(data) {
            var failed = false
+           var count = 0
            for (let i = 0; i < data.content.length; i++) {
              console.log(data.content[i].successful)
              if(data.content[i].successful == false){
-               $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
-               $('#ConnectIntergrationStatus')[0].style.color = 'red';
-               $('#ConnectIntergrationTitle')[0].style.color = 'red';
-               $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
-               $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
-               failed = true
-               break
+               count = count + 1;
+               if(count => 3){
+                 failed = true
+                 $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
+                 $('#ConnectIntergrationStatus')[0].style.color = 'red';
+                 $('#ConnectIntergrationTitle')[0].style.color = 'red';
+                 $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
+                 $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
+                 break
+               }
              }
            }
            if(failed == false){
