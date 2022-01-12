@@ -39,6 +39,7 @@ function GetConnectToken() {
          $('#ConnectIntergrationTitle')[0].style.color = 'red';
          $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
          $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
+         SetSystemStatus()
        }
        });
 }
@@ -47,7 +48,7 @@ function CheckConnectIntergration(token) {
 $.ajax({
 //curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
 
-       'url' : 'https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=20',
+       'url' : 'https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=25',
        'type' : 'GET',
        'Content-Type' : 'application/json',
         headers: {
@@ -59,8 +60,8 @@ $.ajax({
            for (let i = 0; i < data.content.length; i++) {
              console.log(data.content[i].successful)
              if(data.content[i].successful == false){
-               count = count + 1;
-               if(count => 3){
+               //count = count + 1;
+               //if(count => 3){
                  failed = true
                  $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
                  $('#ConnectIntergrationStatus')[0].style.color = 'red';
@@ -68,7 +69,7 @@ $.ajax({
                  $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
                  $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
                  break
-               }
+               //}
              }
            }
            if(failed == false){
@@ -76,6 +77,7 @@ $.ajax({
              $('#ConnectIntergrationStatus')[0].style.color = 'Green';
              $('#ConnectIntergrationTitle')[0].style.color = 'Green';
            }
+           SetSystemStatus()
        },
        'error' : function(request,error)
        {
@@ -84,9 +86,24 @@ $.ajax({
            $('#ConnectIntergrationTitle')[0].style.color = 'red';
            $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
            $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
+           SetSystemStatus()
        }
    });
  }
+
+
+function SetSystemStatus(){
+
+  if($('.FAILED').length == 0 ){
+    $('#SystemStatus')[0].innerHTML = "WORKING"
+    $('#SystemStatus')[0].style.color = 'Green';
+  } else {
+    $('#SystemStatus')[0].innerHTML = "FAILING"
+    $('#SystemStatus')[0].style.color = 'red';
+  }
+}
+
+
 
 
 /* ###### */

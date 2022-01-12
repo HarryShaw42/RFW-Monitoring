@@ -7,11 +7,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="https://uat.royalfarwest.org.au/app/assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://uat.royalfarwest.org.au/app/assets/images/favicon-16x16.png">
 <script src="site.js"></script>
-<div class="container" style=" background: white;height: 500px;border-radius: 20px;border: 2px solid;margin-top: 50px;" onload="CheckPages()">
-  <h2 style="padding-top: 20px; margin-top: 20px; margin-bottom: 20px">RFW - Current Status:</h2>
+<div class="container" style="text-align: center; background: white;height: 500px;border-radius: 20px;border: 2px solid;margin-top: 50px;" onload="CheckPages()">
+<div class="row" style="padding-top: 20px; margin-top: 20px;">
+  <div class="col-md-12">
+      <h2>RFW - Current Status: <i id="SystemStatus"></i></h2>
+  </div>
+</div>
   <!--div><img style="height: 80px;position: absolute;right: 83px;top: 72px;" src="https://www.royalfarwest.org.au/wp-content/uploads/2018/04/RFW-Master-Logo-Stacked-RGB-2017-insta.jpg"></div-->
 
-<div style="padding-bottom: 20px">Last refresh: <span id="time"></span></div>
+<div style="padding-bottom: 20px; text-align: center;">Last refresh: <span id="time"></span></div>
 
 
 
@@ -26,7 +30,7 @@
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td id="ConnectIntergrationTitle">Connect Intergration</td>
+      <td id="ConnectIntergrationTitle">Connect Integration</td>
       <td id="ConnectIntergrationStatus"></td>
     </tr>
     <tr>
@@ -43,36 +47,3 @@
 </table>
 </div>
 </body>
-
-<script type="text/javascript">
-
-
-/********************************************************************************************************************
-Countdown.js is a simple script to add a countdown timer
-for your website. Currently it can only do full minutes
-and partial minutes aren't supported. This script is a fork of http://jsfiddle.net/HRrYG/ with some
-added extensions. Since the original code that I forked was released under Creative Commons by SA license,
-I have to release this code under the same license. You can view a live demo of this code at http://jsfiddle.net/JmrQE/2/.
-********************************************************************************************************************/
-function countdown(minutes) {
-    var seconds = 60;
-    var mins = minutes
-    function tick() {
-        //This script expects an element with an ID = "counter". You can change that to what ever you want.
-        var counter = document.getElementById("counter");
-        var current_minutes = mins-1
-        seconds--;
-        counter.innerHTML = current_minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
-        if( seconds > 0 ) {
-            setTimeout(tick, 1000);
-        } else {
-            if(mins > 1){
-                countdown(mins-1);
-            }
-        }
-    }
-    tick();
-}
-//You can use this script with a call to onclick, onblur or any other attribute you would like to use.
-countdown(n);//where n is the number of minutes required.
-</script>>
