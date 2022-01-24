@@ -22,13 +22,16 @@ function setpagetime() {
 
 
 function GetConnectToken() {
+  var user = window.location.href.split("%27")[1];
+  var password = window.location.href.split("%27")[3];
+
   $.ajax({
 //curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
 
        'url' : 'https://online.royalfarwest.org.au/app/api/login',
        'type' : 'POST',
        'Content-Type' : 'application/json',
-       'data' : 'username=emr.scan&password=4RZv2b5YT',
+       'data' : 'username=' + user + '&password=' + password,
        'success' : function(data) {
          //console.log(data.split('"')[3])
          CheckConnectIntergration(data.split('"')[3]);
@@ -60,8 +63,8 @@ $.ajax({
            for (let i = 0; i < data.content.length; i++) {
              console.log(data.content[i].successful)
              if(data.content[i].successful == false){
-               //count = count + 1;
-               //if(count => 3){
+               count = count + 1;
+               if(count => 3){
                  failed = true
                  $('#ConnectIntergrationStatus')[0].innerHTML = 'FAILING';
                  $('#ConnectIntergrationStatus')[0].style.color = 'red';
@@ -69,7 +72,7 @@ $.ajax({
                  $('#ConnectIntergrationStatus')[0].classList.add('FAILED');
                  $('#ConnectIntergrationTitle')[0].classList.add('FAILED');
                  break
-               //}
+               }
              }
            }
            if(failed == false){
