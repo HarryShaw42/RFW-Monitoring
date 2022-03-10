@@ -1,8 +1,9 @@
 window.onload = function() {
   GetConnectToken()
-  //CheckConnectIntergration()
-  refreshPageTimer()
-  setpagetime()
+  //EMRServer()
+  //ConnectWebiste()
+  //refreshPageTimer()
+  //setpagetime()
 }
 
 function refreshPageTimer() {
@@ -20,6 +21,115 @@ function setpagetime() {
 }
 
 
+
+/*
+#########################################################
+EMR SERVER ##############################################
+#########################################################
+*/
+
+
+function EMRServer() {
+
+
+  var productServiceUrl = 'http://rfwdcemr01.royalfarwest.org.au:8077/MMProfileServices.asmx?op=HelloServer'; // Preferably write this out from server side
+
+  function beginSaveProduct(productID, productName, manufactureDate)
+  {
+  var soapMessage ='<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><HelloServer xmlns="Intrahealth.Accession.Web.Services.MMProfileServices" />';
+
+  $.ajax({
+  url: productServiceUrl,
+  type: "POST",
+  dataType: "xml",
+  data: soapMessage,
+  complete: endSaveProduct,
+  contentType: "text/xml; charset=\"utf-8\""
+  });
+
+  return false;
+  }
+
+  function endSaveProduct(xmlHttpRequest, status)
+  {
+   $(xmlHttpRequest.responseXML)
+      .find('SaveProductResult')
+      .each(function()
+   {
+     var name = $(this).find('Name').text();
+   });
+  }
+
+
+
+
+
+
+/*
+
+
+var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><HelloServer xmlns="Intrahealth.Accession.Web.Services.MMProfileServices" /></soap:Body></soap:Envelope>';
+
+$.ajax({
+//curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
+
+       'url' : 'http://rfwdcemr01.royalfarwest.org.au:8077/MMProfileServices.asmx?op=HelloServer',
+       'type' : 'POST',
+       'dataType': "xml",
+       'data': soapMessage,
+       //'processData': false,
+       headers: {
+       'Content-Type' : 'Text/xml',
+       'Access-Control-Allow-Headers': '*'
+       },
+       'success' : function(data) {
+          alert(success)
+       },
+       'error' : function(request,error) {
+         alert(error)
+       }
+   });
+
+
+*/
+ }
+
+ /*
+ #########################################################
+ Connect Webiste ####################################
+ #########################################################
+ */
+
+
+
+
+
+
+function ConnectWebiste() {
+
+  $.ajax({
+//curl -H "Content-Type: application/json" -X GET -H "X-Auth-Token: 791a0df3-0526-463c-8217-f9702430215a" "https://online.royalfarwest.org.au/app/api/external-emr/filter?page=1&pageSize=100"
+
+       'url' : 'https://online.royalfarwest.org.au/app/assets/images/logo-large.png',
+       'type' : 'GET',
+       'crossDomain': true,
+       'complete' : function(data) {
+          console.log(data)
+       },
+       'error' : function(request,error){
+         console.log('WAAAA')
+       }
+       });
+}
+
+
+
+
+/*
+#########################################################
+Connect Intergration ####################################
+#########################################################
+*/
 
 function GetConnectToken() {
   var user = window.location.href.split("%27")[1];
